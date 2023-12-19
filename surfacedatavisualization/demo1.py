@@ -20,7 +20,10 @@ def getImage(dataDirPath, outputDir):
     group_flag = 0
     with tqdm(total=len(os.listdir(dataDirPath))) as pbar:
         for data_path in os.listdir(dataDirPath):
+            # 生成的文件名
             name = data_path.split('.')[0]
+            # 参数名称
+            parameter = data_path.split('.')[0][-1]
             group_id = name[-int(len(name)):-4]  # 组号
             if group_flag != group_id and not os.path.exists(os.path.join(outputDir, group_id)):
                 group_flag = group_id
@@ -36,8 +39,14 @@ def getImage(dataDirPath, outputDir):
                 nrows=int(use_max_row - use_min_row),
                 usecols=use_col_list)
             f, ax = plt.subplots(1, 1)
-            sns.heatmap(df, cmap='RdYlGn_r', linewidths=0.1,
-                        vmin=0, vmax=1)
+            ribbonFlag = df.iloc[0, 0]
+
+            if not ribbonFlag:
+                sns.heatmap(df, cmap='RdYlGn_r', linewidths=0.1,
+                            vmin=0, vmax=1)
+            else:
+                sns.heatmap(df, cmap='RdYlGn', linewidths=0.1,
+                            vmin=0, vmax=1)
 
             # print('------------------------------------')
             # print('x轴刻度')
@@ -53,7 +62,7 @@ def getImage(dataDirPath, outputDir):
             ax.set_yticklabels(y_label)
 
             # 设置Axes的标题
-            ax.set_title('Group:{} Day Of Years:{}'.format(group_id, day_id))
+            ax.set_title('Parameter:{} Group:{} Day Of Years:{}'.format(parameter, group_id, day_id))
             f.savefig(os.path.join(outputDir, group_id, name + '.png'), dpi=500, bbox_inches='tight')
             pbar.update(1)
 
@@ -83,11 +92,12 @@ def getGif(imageDirPath, gifDirPath, groupId):
     images = []
     with tqdm(total=len(os.listdir(imageDirPath))) as pbar:
         for data_path in os.listdir(imageDirPath):
+            parameter = data_path.split('.')[0][-1]
             # 打开图片
             images.append(Image.open(os.path.join(imageDirPath, data_path)))
 
             # 设置输出 GIF 文件名
-            output_gif = os.path.join(gifDirPath, 'y_output' + str(groupId) + '.gif')
+            output_gif = os.path.join(gifDirPath, parameter + '_output' + str(groupId) + '.gif')
 
             # 将图片保存为 GIF
             images[0].save(
@@ -100,11 +110,13 @@ def getGif(imageDirPath, gifDirPath, groupId):
             pbar.update(1)
 
 
-dataDirPathMain = 'ca_result_y'
-gifDir = r'E:\a_python\program\testPlatform\surfacedatavisualization\images\gif_ca_result_y'
+dataDirPathMain = 'ca_result_e'
+gifDir = r'E:\a_python\program\testPlatform\surfacedatavisualization\images\gif_ca_result_e'
+# imageDir = r'E:\a_python\program\testPlatform\surfacedatavisualization\images\image_ca_result_y'
+
 for i in range(1, 15):
     print(i)
-    imageDir = os.path.join(r'E:\a_python\program\testPlatform\surfacedatavisualization\images\image_ca_result_y',
+    imageDir = os.path.join(r'E:\a_python\program\testPlatform\surfacedatavisualization\images\image_ca_result_e',
                             str(i))
     getGif(imageDir, gifDir, i)
 # getImage(dataDirPathMain, imageDir)

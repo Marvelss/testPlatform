@@ -127,7 +127,9 @@ def start(dataDirNameList, min_row, max_row, min_col, max_col):
             os.mkdir(gifDirPath1)
             # print(gifDirPath1)
         dataPath = os.path.join(ROOT_PATH, tempDataPath)
-
+        print('生成的热力图文件路径:{}'.format(imageDirPath1))
+        print('生成的GIF文件路径:{}'.format(gifDirPath1))
+        print('***********************初始化参数设置***********************')
         print('文件夹:{} 开始生成热力图'.format(tempDataPath))
         getImage(dataPath, imageDirPath1, min_row, max_row, min_col, max_col)
         print('热力图像生成完成')
@@ -149,6 +151,8 @@ if __name__ == '__main__':
     dataDirNameTempList = ['ca_result_e', 'ca_result_s', 'ca_result_y']
 
     ROOT_PATH = os.getcwd()
-
+    print('根目录路径:{}'.format(ROOT_PATH))
+    print('读取面状数据文件夹名称:{}'.format(dataDirNameTempList))
+    print('可视化区域截取范围:{}-{}行 {}-{}列'.format(min_row1, max_row1, min_col1, max_col1))
     # 程序运行
     start(dataDirNameTempList, min_row1, max_row1, min_col1, max_col1)

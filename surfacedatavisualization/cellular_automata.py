@@ -10,13 +10,14 @@ from PIL import Image
 """
 @Author  : SakuraFox
 @Time    : 2023-12-20 10:10
-@File    : demo.py
-@Description : 面状数据可视化-以元胞自动机为例,
-将结果输出在同级目录下的images中,包括原始热力图和合成后的GIF图
-
-注意:
-1.面状数据和py文件放在同一目录下
-2.
+@File    : cellular_automata.py
+@Description : 面状数据可视化-以元胞自动机为例
+根据用户输入的面状数据和选取的显示区域范围，
+该模块可以自动生成以热力图形式的可视化结果，
+以展示某个区域内作物的发病情况。
+同时，还合成了每一组结果数据内多天的热力图，
+以GIF图的形式动态展示多天变化的效果，
+让用户更直观地感受病害发展的变化过程。
 """
 
 
@@ -110,6 +111,7 @@ def getGif(imageDirPath, gifDirPath, groupId):
             pbar.update(1)
 
 
+# 控制程序循环运行
 def start(dataDirNameList, min_row, max_row, min_col, max_col):
     for tempDataPath in dataDirNameList:
         # 主文件夹路径

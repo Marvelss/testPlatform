@@ -28,7 +28,8 @@ pillow==9.4.0
 ## 操作说明
 
 1）将输入的面状数据文件夹和cellular_automata.py代码文件放在同一目录下  
-2）安装完所需的第三方库后,运行cellular_automata.py
+2）安装项目所需的第三方库  
+3）初始化设置参数,面状数据文件夹名称和显示区域范围,然后运行cellular_automata.py
 ## 注意事项
 
 1）输入面状数据文件格式必须为excel格式（.xlsx ,.xls），并将这些文件放在一个文件夹中  

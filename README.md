@@ -8,12 +8,12 @@
 
 ## Python版本及依赖环境要求
 
-Python>=3.7
-matplotlib==3.5.3
-pandas==1.3.5
-seaborn==0.12.2
-tqdm==4.65.0
-pillow==9.4.0
+Python>=3.7  
+matplotlib==3.5.3  
+pandas==1.3.5  
+seaborn==0.12.2  
+tqdm==4.65.0  
+pillow==9.4.0  
 
 ## 输入
 

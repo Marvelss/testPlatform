@@ -5,6 +5,7 @@ import numpy as np
 from scipy.stats import norm
 
 """
+原始matlab代码转换Python
 这段代码是用matlab实现的，看起来是一个运用SEIR模型进行疫情预测的程序。
 程序中使用了xlsx格式的表格存储数据，包括气象数据、移栽期、植保数据等。
 其中还用到了正态分布函数和logistic函数对温度和降水量进行响应处理，
@@ -19,7 +20,6 @@ def fitness2(ka, kb, kc, q, r, OPT_PRI, YZQ_num, YZQ_txt, YZQ_data, ZB_num, ZB_d
     D = []
     for i in range(0, yzq_row):
         ida = operator.eq(YZQ_data.values[i, 1], met_txt.values[:, 1])
-        ida = np.array(ida)
         aimrow = np.where(ida[:] == 1)
         # aimplace_met = []
         aimplace_met_num = []
@@ -32,12 +32,13 @@ def fitness2(ka, kb, kc, q, r, OPT_PRI, YZQ_num, YZQ_txt, YZQ_data, ZB_num, ZB_d
         idb = operator.eq(YZQ_data.values[i, 1], ZB_data.values[:, 4])
         idb = np.array(idb)
         aimrow1 = np.where(idb[:] == 1)
+
         aimplace_ZB = []
         aimplace_ZB_num = []
         for p in aimrow1[0]:
             aimplace_ZB.append(ZB_data.values[p, :])
             aimplace_ZB_num.append(ZB_num.values[p, :])
-        # print(ZB_num)
+            # print(ZB_num)
         idc = operator.eq(YZQ_data.values[i, 1], Jizhi_data.values[:, 1])
         idc = np.array(idc)
         aimrowjizhi = np.where(idc[:] == 1)
@@ -47,7 +48,7 @@ def fitness2(ka, kb, kc, q, r, OPT_PRI, YZQ_num, YZQ_txt, YZQ_data, ZB_num, ZB_d
         Jizhi4 = np.array(Jizhi4)
         for ii in range(2010, 2017):
             temp = np.array(aimplace_ZB_num)
-            # print(temp)
+            # print(aimplace_ZB_num)
             aimrow3 = np.where(temp[:, 0] == ii)
             if np.size(aimrow3) != 0:
                 temp1 = np.array(aimplace_met_num)
@@ -68,7 +69,10 @@ def fitness2(ka, kb, kc, q, r, OPT_PRI, YZQ_num, YZQ_txt, YZQ_data, ZB_num, ZB_d
                 e1 = tmp[startday - 5:endday, :]  # 具体日期
                 e = e1[:, [2, 3]]
                 [erow, _] = e.shape
+
+                # 潜伏期参数
                 W = 1 / 3
+                # 感染期参数
                 U = 1 / q
                 dt = 1
                 n = erow - 4
@@ -91,7 +95,11 @@ def fitness2(ka, kb, kc, q, r, OPT_PRI, YZQ_num, YZQ_txt, YZQ_data, ZB_num, ZB_d
                     e_TEM = np.mean(e2)
                     PRI = 1 + (0.001 - 1) / (1 + math.exp((e_PRI - OPT_PRI) / r))
                     x = np.linspace(0, 43, 44)
-                    y = norm.pdf(x, 28, kc)
+
+                    y = norm.pdf(x, 28, kc)  # 使用了SciPy中的norm函数，pdf表示概率密度函数。
+                    # 这一行代码计算了在均值为28，标准差为kc的正态分布下，
+                    # 对x中每一个值的概率密度函数值。
+                    # 这意味着y数组中的每个元素都代表了在给定正态分布下对应x值的概率密度
                     MAX = max(y)
                     MIN = min(y)
                     TEM = (y[math.floor(e_TEM)] - MIN) / (MAX - MIN)
@@ -124,16 +132,24 @@ def fitness2(ka, kb, kc, q, r, OPT_PRI, YZQ_num, YZQ_txt, YZQ_data, ZB_num, ZB_d
                     aimJizhi = Jizhi4[aimjzrow, 0]
                     D.append(y1[z, 0] * aimJizhi)
 
+    # 计算R方和RMSE
     ZB1 = ZB_num
-    R2_FENZI1 = []
+    R2_List = []
+    RMSE_List_Temp = []
     [RowZB, ColZB] = ZB1.shape
     for s in range(0, RowZB):
-        R2_fenzi = np.power((ZB1.values[s, 14] - D[s]), 2)  # np.power((ZB1.values[s - 1, 14] - D[s]), 2)
-        R2_FENZI1.append(R2_fenzi)
-    R2_FENZI = sum(R2_FENZI1)
-    RMSE = (R2_FENZI / RowZB) ** 0.5
+        # 残差平方和
+        res_fenzi = np.power((ZB1.values[s, 14] - D[s]), 2)  # np.power((ZB1.values[s - 1, 14] - D[s]), 2)
+        # 平方和
+        average_Y = np.mean(ZB1.values[:, 14])  # 假设ZB1.values[:, 14]是你的观察值
+        SS_tot = sum(np.power(ZB1.values[:, 14] - average_Y, 2))
+
+        R2_List.append(1 - res_fenzi / SS_tot)
+        RMSE_List_Temp.append(res_fenzi)
+    RMSE_FENZI = sum(RMSE_List_Temp)
+    RMSE = (RMSE_FENZI / RowZB) ** 0.5
     # R3 = np.corrcoef(ZB1.values[:, 14], D)
     # R2 = np.power(R3, 2)
 
-    return RMSE, D
+    return R2_List, RMSE, D
 # fitness2(1, 1, 1, 1, 1, 1)

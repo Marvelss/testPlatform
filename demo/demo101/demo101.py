@@ -31,25 +31,43 @@ met_data = pd.read_excel(metPath, sheet_name='HN', header=None)
 Jizhi_num = pd.read_excel(jizhiPath, sheet_name='训练集HN', header=None)
 Jizhi_data = pd.read_excel(jizhiPath, sheet_name='训练集HN', header=None)
 
-RMSE, D = fitness2(2, 0.2, 40, 60, 15, 15,
-                YZQ_num, YZQ_txt,
-                YZQ_data, ZB_num, ZB_data, met_num,
-                met_txt, met_data, Jizhi_num, Jizhi_data)
+# ==============================参数设置==============================
+# 缓冲系数
+ka, kb = 4.05, 0.04
+# 正态分布的标准差,用于TEM
+kc = 5.84
+# 调节参数,用于降水影响模块P
+r = 58.85
+# 最适降水量,用于降水影响模块P
+OPT_PRI = 10.83
+
+# 潜伏期(ω)默认为3
+# 潜在感染率(β0)默认为0.46
+# 感染期(μ)
+q = 52.93
+
+# ==============================SEIR模型调用==============================
+R2_FENZI, RMSE, D = fitness2(ka, kb, kc, q, r, OPT_PRI,
+                             YZQ_num, YZQ_txt,
+                             YZQ_data, ZB_num, ZB_data, met_num,
+                             met_txt, met_data, Jizhi_num, Jizhi_data)
+
+# ==============================结果展示==============================
 output_list = []
+R2 = []
 for arr in D:
     output_list.append(arr.tolist()[0][0])
 
 # 预测病害结果
 print(output_list)
 # RMSE
-print(RMSE)
+print(f'RMSE:{RMSE[0][0]}')
+for arr in R2_FENZI:
+    R2.append(arr.tolist()[0][0])
+print(f'R2_FENZI:{R2}')
+
 #
-# ka = 4
-# kb = 0.1
-# kc = 30
-# q = 50
-# r = 40
-# OPT_PRI = 40
+
 # RMSE = fitness2(float(ka),
 #                 float(kb),
 #                 float(kc), float(q),
@@ -57,4 +75,3 @@ print(RMSE)
 #                 YZQ_num, YZQ_txt,
 #                 YZQ_data, ZB_num, ZB_data, met_num,
 #                 met_txt, met_data, Jizhi_num, Jizhi_data)
-

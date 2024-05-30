@@ -74,8 +74,10 @@ def space_time_extract(template_tif_path, temperature_dir, cumulated_temperature
     # 获取起点日期
     doy_list = accumulate_values(temperature, cumulated_temperature)
 
+    # 转置结果
+    doy_list_result = np.transpose(doy_list)
     print('生成DOY图像')
-    generate_tif(doy_list, template_tif_path1, saved_path2)
+    generate_tif(doy_list_result, template_tif_path1, saved_path2)
 
     print(doy_list[116, 909])
     print(doy_list[216, 909])

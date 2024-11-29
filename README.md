@@ -74,3 +74,21 @@ dataDirNameTempList = ['ca_result_e', '面状数据文件夹名称2', ''面状�
 ## 结果展示
 
 ![meeting_01.gif](introduction/meeting_01.gif)
+
+# 3.基于Docker的系统部署
+
+## 功能描述
+
+利用Docker部署基于Streamlit搭建的Web系统
+
+## 操作流程
+
+1.添加Dockerfile文件
+2.设置具体参数(详细参考Dockerfile文件)
+3.命令行输入Docker指令打包镜像:docker build ./myproject -t streamlit
+4.命令行输入Docker指令运行镜像:docker run -p 8501:8501 streamlit
+
+## 结果展示
+
+![demo156_Img1.png](introduction/demo156_Img1.png)
+![demo156_Img2.png](introduction/demo156_Img2.png)

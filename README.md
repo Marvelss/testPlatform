@@ -57,3 +57,16 @@ dataDirNameTempList = ['ca_result_e', '面状数据文件夹名称2', ''面状�
 ![img.png](introduction/img.png)
 ![img1.png](introduction/img1.png)
 ![e_output8.gif](introduction/e_output8.gif)
+
+# 2.基于PYQT信号与槽的多线程实现方式
+
+## 功能描述
+
+基于多线程编程方式，实现自动从URL下载文件的同时，可以更新UI界面进度条和在文本框输入文字，解决基于单线程实现程序时，界面处理其他操作后出现无响应问题
+
+## 关键代码
+
+progressSignal = pyqtSignal()
+self.progressSignal.emit()
+self.download_thread.start()
+self.download_thread.progressSignal.connect()

@@ -70,3 +70,7 @@ progressSignal = pyqtSignal()
 self.progressSignal.emit()
 self.download_thread.start()
 self.download_thread.progressSignal.connect()
+
+## 结果展示
+
+![meeting_01.gif](meeting_01.gif)

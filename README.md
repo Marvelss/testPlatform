@@ -66,11 +66,11 @@ dataDirNameTempList = ['ca_result_e', '面状数据文件夹名称2', ''面状�
 
 ## 关键代码
 
-progressSignal = pyqtSignal()
-self.progressSignal.emit()
-self.download_thread.start()
-self.download_thread.progressSignal.connect()
+1）progressSignal = pyqtSignal()
+2）self.progressSignal.emit()
+3）self.download_thread.start()
+4）self.download_thread.progressSignal.connect()
 
 ## 结果展示
 
-![meeting_01.gif](meeting_01.gif)
+![meeting_01.gif](introduction/meeting_01.gif)

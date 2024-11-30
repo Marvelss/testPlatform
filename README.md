@@ -66,10 +66,10 @@ dataDirNameTempList = ['ca_result_e', '面状数据文件夹名称2', ''面状�
 
 ## 关键代码
 
-1）progressSignal = pyqtSignal()
-2）self.progressSignal.emit()
-3）self.download_thread.start()
-4）self.download_thread.progressSignal.connect()
+1）progressSignal = pyqtSignal()  
+2）self.progressSignal.emit()  
+3）self.download_thread.start()  
+4）self.download_thread.progressSignal.connect()  
 
 ## 结果展示
 
@@ -83,10 +83,10 @@ dataDirNameTempList = ['ca_result_e', '面状数据文件夹名称2', ''面状�
 
 ## 操作流程
 
-1）添加Dockerfile文件
-2）设置具体参数(详细参考Dockerfile文件)
-3）命令行输入Docker指令打包镜像:docker build ./myproject -t streamlit
-4）命令行输入Docker指令运行镜像:docker run -p 8501:8501 streamlit
+1）添加Dockerfile文件  
+2）设置具体参数(详细参考Dockerfile文件)  
+3）命令行输入Docker指令打包镜像:docker build ./myproject -t streamlit  
+4）命令行输入Docker指令运行镜像:docker run -p 8501:8501 streamlit  
 
 ## 结果展示
 

@@ -92,3 +92,35 @@ dataDirNameTempList = ['ca_result_e', '面状数据文件夹名称2', ''面状�
 
 ![demo156_Img1.png](introduction/demo156_Img1.png)
 ![demo156_Img2.png](introduction/demo156_Img2.png)
+
+# 4.面向网格数据的气象因子提取
+
+## 功能描述
+	
+针对国家气象科学数据中心[1]提供的网格气象数据（0.5°×0.5°），根据指定经纬度信息，匹配对应格点数据，从而批量提取并转化为目标地区excel格式的气象数据
+![4-2.jpg](introduction/4-2.jpg)
+## 方法
+
+1）利用rasterio将ASCII转换栅格  
+2）通过整数除法找到指定经纬度所在的栅格位置并获取值  
+lon_index = int ((lon - adfGeoTransform[0]) / adfGeoTransform[1])  
+lat_index = int ((lat - adfGeoTransform[3]) / adfGeoTransform[5])  
+![4-1.jpg](introduction/4-1.jpg)
+
+## 依赖环境版本
+ 
+GDAL==3.8.2  
+rasterio==1.3.10  
+
+## 操作流程
+
+用户输入包含经纬度信息的excel文件，系统自动根据经纬度匹配网格气象数据，以excel文件格式输出提取后的气象数据  
+注意:系统会自动创建2个文件夹存放过程文件，1个提取后的结果excel文件
+1. 自定义文件名(如uploadFile.xlsx):上传含经纬度信息的excel文件
+2. rasterFile:由ASCII转换的栅格数据
+3. excelFile:由栅格数据转换的excel数据
+4. result.xlsx:提取后的结果excel文件
+
+## 参考文献
+
+[1]赵煜飞,朱江,许艳. 近50a中国降水格点数据集的建立及质量评估[J]. 气象科学,2014,34(4):414-420. DOI:10.3969/2013jms.0008.

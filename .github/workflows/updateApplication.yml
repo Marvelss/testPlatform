@@ -47,8 +47,8 @@ jobs:
           python-version: "3.9.13"
           architecture: "x64"
           cache: 'pip'
-      - name: 下载依赖文件
-        run: pip install -r requirements.txt
+#      - name: 下载依赖文件
+#        run: pip install -r requirements.txt
       - name: 编译exe
         run: |
           python run_write_version.py

@@ -124,3 +124,38 @@ rasterio==1.3.10
 ## 参考文献
 
 [1]赵煜飞,朱江,许艳. 近50a中国降水格点数据集的建立及质量评估[J]. 气象科学,2014,34(4):414-420. DOI:10.3969/2013jms.0008.
+
+# 5.基于Landscapemetrics的批量化景观指数计算
+
+## 功能描述
+	
+集成Landscapemetrics开源库，实现了景观指数的批量化计算。支持Patch、Class、Landscapemetrics三个景观级别，共133个景观指数计算。  
+![4-2.jpg](introduction/5-1.png)
+## 方法
+
+这里只做了集成工作，具体原理可查询文献[1]，可计算的景观指数可查阅该网址[2]
+
+
+## 依赖环境版本
+ 
+R语言版本==4.4.0  
+openxlsx==4.2.7.1  
+terra==1.7-71  
+landscapemetrics==2.1.2  
+
+## 操作流程
+
+1. 安装R语言及其运行平台，并导入上述依赖环境的三个包  
+2. 按需修改代码中的输入设置部分，主要包含三个参数：工作台路径、土地覆盖类型数据路径、需要计算的景观指数函数  
+3. 运行代码后自动计算景观指数值，并以excel文件格式保存到本地(保存路径默认同工作台路径,且一个景观指数值对应一个excel文件)  
+
+
+## 结果展示
+
+![demo156_Img1.png](introduction/5-2.png)  
+![demo156_Img2.png](introduction/5-3.png)  
+
+## 参考文献
+
+[1]Hesselbarth M H K, Sciaini M, With K A, et al. landscapemetrics: an open‐source R tool to calculate landscape metrics[J]. Ecography, 2019, 42(10): 1648-1657.  
+[2]https://github.com/r-spatialecology/landscapemetrics/blob/main/NAMESPACE
